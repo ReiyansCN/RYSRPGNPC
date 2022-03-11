@@ -53,7 +53,8 @@ public class MRPGNPC extends PluginBase {
 
     @Override
     public void onEnable() {
-        getServer().getLogger().info("MRPGNPC is enable!The author is MuffinHead.");
+        getServer().getLogger().info("MRPGNPC1.0.0(PNX Version) is enable!The author is Reiyans and MuffinHead");
+        getServer().getLogger().info("MRPGNPC1.0.0(PNX版本) 启动成功!插件作者是 Reiyans 和 MuffinHead");
         getServer().getPluginManager().registerEvents(new MobNPCBeAttack(),this);
         mrpgnpc = this;
         checkMobs();
@@ -65,7 +66,8 @@ public class MRPGNPC extends PluginBase {
         try {
             checkSkins();
         } catch (IOException e) {
-            getServer().getLogger().alert("Skins check wrong！！");
+            getServer().getLogger().alert("Skins files check wrong！！");
+            getServer().getLogger().alert("检查到皮肤文件出错！！");
         }
     }
 
@@ -84,7 +86,7 @@ public class MRPGNPC extends PluginBase {
     //command part
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        if (command.getName().equalsIgnoreCase("mrn")) {
+        if (command.getName().equalsIgnoreCase("mrn") && command.getName().equalsIgnoreCase("刷怪")) {
             if (args.length <= 0) return false;
             switch (args[0]) {
                 case "clear":{
@@ -100,6 +102,29 @@ public class MRPGNPC extends PluginBase {
                             }
                         }
                         case "drops": {
+                            for (Level level:getServer().getLevels().values()){
+                                for (Entity entity:level.getEntities()){
+                                    if (entity instanceof EntityItem) {
+                                        entity.kill();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                case "清除":{
+                    if (args.length <= 1) return false;
+                    switch (args[1]) {
+                        case "怪物":{
+                            for (Level level:getServer().getLevels().values()){
+                                for (Entity entity:level.getEntities()){
+                                    if (entity instanceof MobNPC) {
+                                        entity.kill();
+                                    }
+                                }
+                            }
+                        }
+                        case "掉落物": {
                             for (Level level:getServer().getLevels().values()){
                                 for (Entity entity:level.getEntities()){
                                     if (entity instanceof EntityItem) {
@@ -140,6 +165,45 @@ public class MRPGNPC extends PluginBase {
                             }
                         }
                         case "spawn": {
+                            NPC npc = spawnNPC(sender, args);
+                            if (npc!=null){
+                                npc.spawnToAll();
+                            }
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+                case "怪物": {
+                    if (args.length <= 1) return false;
+                    switch (args[1]) {
+                        case "创建": {
+                            if (args.length >= 3) {
+                                File mobFile = getMobFolder().resolve(args[2] + ".yml").toFile();
+                                if (mobFile.exists()) {
+                                    sender.sendMessage("§c这个名字的怪物文件已经存在!");
+                                    return true;
+                                }
+                                Config config = createMobConfig(mobFile.getPath());
+                                config.save();
+                                sender.sendMessage("§a新的怪物配置文件创建成功!");
+                                return true;
+                            }
+                        }
+                        case "删除": {
+                            if (args.length >= 3) {
+                                File mobFile = getMobFolder().resolve(args[2] + ".yml").toFile();
+                                if (!mobFile.exists()) {
+                                    sender.sendMessage("§c没有找到要删除的配置文件");
+
+                                } else {
+                                    mobFile.deleteOnExit();
+                                    sender.sendMessage("§a这个怪物的配置文件已经删除!");
+                                }
+                                return true;
+                            }
+                        }
+                        case "生成": {
                             NPC npc = spawnNPC(sender, args);
                             if (npc!=null){
                                 npc.spawnToAll();
@@ -193,6 +257,38 @@ public class MRPGNPC extends PluginBase {
                         }
                     }
                 }
+                case "刷怪点": {
+                    if (args.length <= 1) return false;
+                    switch (args[1]) {
+                        case "创建": {
+                            if (sender instanceof Player) {
+                                if (args.length >= 3) {
+                                    File pointFile = getPointFolder().resolve(args[2] + ".yml").toFile();
+                                    if (pointFile.exists()) {
+                                        sender.sendMessage("§c这个名字的刷怪点配置文件已经存在!");
+                                        return true;
+                                    }
+                                    Config config = createPointConfig(pointFile.getPath(), ((Player) sender));
+                                    config.save();
+                                    sender.sendMessage("§a新的刷怪点配置文件创建成功!");
+                                    return true;
+                                }
+                            }
+                        }
+                        case "删除": {
+                            if (args.length >= 3) {
+                                File pointFile = getPointFolder().resolve(args[2] + ".yml").toFile();
+                                if (!pointFile.exists()) {
+                                    sender.sendMessage("§c没有找到这个刷怪点的配置文件");
+                                } else {
+                                    pointFile.deleteOnExit();
+                                    sender.sendMessage("§a这个刷怪点配置文件删除成功!");
+                                }
+                                return true;
+                            }
+                        }
+                    }
+                }
                 case "reload":{
                     checkMobs();
                     checkPoints();
@@ -211,6 +307,26 @@ public class MRPGNPC extends PluginBase {
                         getServer().getLogger().alert("Skins check wrong！！");
                     }
                     sender.sendMessage("§aThe mob&point files was reload successfully!");
+                    return true;
+                }
+                case "重载":{
+                    checkMobs();
+                    checkPoints();
+                    checkSkills();
+                    for (Level level:getServer().getLevels().values()){
+                        for (Entity entity:level.getEntities()){
+                            if (!(entity instanceof Player)){
+                                entity.close();
+                            }
+                        }
+                    }
+                    //getServer().getScheduler().scheduleDelayedRepeatingTask(new AutoSpawn(),1,1);
+                    try {
+                        checkSkins();
+                    } catch (IOException e) {
+                        getServer().getLogger().alert("皮肤文件出错！！");
+                    }
+                    sender.sendMessage("§a怪物与刷怪点重新加载成功!");
                     return true;
                 }
 
@@ -232,9 +348,27 @@ public class MRPGNPC extends PluginBase {
                         }
                     }
                 }
+                case "技能": {
+                    switch (args[1]){
+                        case "创建":{
+                            if (args.length >= 3) {
+                                File skillFile = getSkillFolder().resolve(args[2] + ".yml").toFile();
+                                if (skillFile.exists()) {
+                                    sender.sendMessage("§c这个名字的技能配置文件已经存在!");
+                                    return true;
+                                }
+                                Config config = createSkillConfig(skillFile.getPath());
+                                config.save();
+                                sender.sendMessage("§a新的技能配置文件成功创建!");
+                                return true;
+                            }
+                        }
+                    }
+                }
             }
         }
         return super.onCommand(sender, command, label, args);
+
     }
 //command part
 
