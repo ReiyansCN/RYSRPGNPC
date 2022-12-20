@@ -9,7 +9,7 @@ commands:
     description: "mrn main command"
     permission: commands.muffinhead.MRPGNPC
   刷怪:
-    description: "MRPGNPC刷怪指令"
+    description: "MRPGNPC刷怪主指令"
     permission: commands.muffinhead.MRPGNPC
 permissions:
   commands.muffinhead.MRPGNPC:
