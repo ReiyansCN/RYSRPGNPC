@@ -6,7 +6,7 @@ api: "1.0.8"
 version: "1.0.0"
 commands:
   mrn:
-    description: "MRPGNPC指令"
+    description: "mrn main command"
     permission: commands.muffinhead.MRPGNPC
   刷怪:
     description: "MRPGNPC刷怪指令"
