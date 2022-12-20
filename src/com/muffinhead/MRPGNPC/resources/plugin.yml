@@ -1,5 +1,5 @@
-name: MRPGNPC
-author: MuffinHeadANDReiyans
+name: MRPGNPC(PNX)
+author: MuffinHead&Reiyans
 main: com.muffinhead.MRPGNPC.MRPGNPC
 load: POSTWORLD
 api: "1.0.8"

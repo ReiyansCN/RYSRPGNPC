@@ -54,7 +54,7 @@ public class MRPGNPC extends PluginBase {
     @Override
     public void onEnable() {
         getServer().getLogger().info("MRPGNPC1.0.0(PNX Version) is enable!The author is Reiyans and MuffinHead");
-        getServer().getLogger().info("MRPGNPC1.0.0(PNX版本) 启动成功!插件作者是 Reiyans 和 MuffinHead");
+        getServer().getLogger().info("MRPGNPC1.0.0(PNX版本) 启动成功!插件作者是 MuffinHead 与 Reiyans ");
         getServer().getPluginManager().registerEvents(new MobNPCBeAttack(),this);
         mrpgnpc = this;
         checkMobs();

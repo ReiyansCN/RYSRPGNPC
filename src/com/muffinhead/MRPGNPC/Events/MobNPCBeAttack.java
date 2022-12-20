@@ -16,10 +16,8 @@ import cn.nukkit.event.level.ChunkUnloadEvent;
 import cn.nukkit.event.server.DataPacketSendEvent;
 import cn.nukkit.level.Level;
 import cn.nukkit.math.Vector3;
-import cn.nukkit.network.protocol.AnvilDamagePacket;
 import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.network.protocol.EntityEventPacket;
-import cn.nukkit.network.protocol.SetEntityDataPacket;
 import com.muffinhead.MRPGNPC.Effects.Bullet;
 import com.muffinhead.MRPGNPC.NPCs.MobNPC;
 import com.muffinhead.MRPGNPC.NPCs.NPC;
@@ -292,7 +290,6 @@ public class MobNPCBeAttack implements Listener {
             }
         }
     }
-
     @EventHandler
     public void onDamage(EntityDamageByChildEntityEvent event){
         Entity bullet = event.getChild();

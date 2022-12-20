@@ -1,6 +1,5 @@
 package com.muffinhead.MRPGNPC.Effects;
 
-import cn.nukkit.Player;
 import cn.nukkit.entity.Entity;
 import cn.nukkit.entity.projectile.EntityProjectile;
 import cn.nukkit.event.Event;
@@ -11,7 +10,6 @@ import cn.nukkit.level.format.FullChunk;
 import cn.nukkit.math.AxisAlignedBB;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.nbt.tag.CompoundTag;
-import com.muffinhead.MRPGNPC.NPCs.MobNPC;
 
 public class Bullet extends EntityProjectile {
     int networkID = 81;
