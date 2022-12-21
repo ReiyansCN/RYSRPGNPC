@@ -18,7 +18,6 @@ import cn.nukkit.level.Level;
 import cn.nukkit.math.Vector3;
 import cn.nukkit.network.protocol.DataPacket;
 import cn.nukkit.network.protocol.EntityEventPacket;
-import com.muffinhead.MRPGNPC.Effects.Bullet;
 import com.muffinhead.MRPGNPC.NPCs.MobNPC;
 import com.muffinhead.MRPGNPC.NPCs.NPC;
 
@@ -288,14 +287,6 @@ public class MobNPCBeAttack implements Listener {
                     event.setCancelled();
                 }
             }
-        }
-    }
-    @EventHandler
-    public void onDamage(EntityDamageByChildEntityEvent event){
-        Entity bullet = event.getChild();
-        if (bullet instanceof Bullet){
-            event.setKnockBack(((Bullet) bullet).knockback);
-            event.setDamage(((Bullet) bullet).damage);
         }
     }
     @EventHandler
