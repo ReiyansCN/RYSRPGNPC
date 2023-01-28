@@ -4,4 +4,4 @@ This a special version of powenukkitx,in fact,a number of functions keep silent.
 3.Fix some no correct informations and others api<br>4.Use this version >= java17<br>
 In future,I will update more new things.such as pnx ai,default modle......<br>
 The origin anthor is MuffinHead,origin github link is https://github.com/MufHead/MRPGNPC <br>
-Reiyans try his best to keep this pnx version updating,so give me a star,thanks!
+Reiyans try his best to keep this pnx version updating,so give me a star,thanks!!!
